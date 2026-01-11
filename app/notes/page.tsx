@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
 
-import NotesPage from "@/components/NotesPage/NotesPage.client";
+import NotesPage from "@/app/notes/Notes.client";
 
 interface NotesProps {
   searchParams?: Promise<{

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useDebounceValue } from "usehooks-ts";
 
-import css from "./NotesPage.module.css";
+import css from "./Notes.client.module.css";
 
 import type { FetchNotesResponse } from "@/lib/api";
 import { fetchNotes } from "@/lib/api";
