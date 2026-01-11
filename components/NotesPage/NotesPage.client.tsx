@@ -64,10 +64,10 @@ export default function NotesPage() {
               />
             </Modal>
           )}
-          {/* {!isError && !isLoading && !data?.notes?.length && !isLoading && (
+          {!isError && !isLoading && !data?.notes?.length && !isLoading && (
             <ErrorBox query={debauncedSearch} />
           )}
-          {isError && <ErrorBox errorMessage={error.message} />} */}
+          {isError && <ErrorBox errorMessage={error.message} />}
         </div>
       </div>
     </div>
