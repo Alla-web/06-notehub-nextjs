@@ -7,7 +7,7 @@ import { createNote } from "@/lib/api";
 
 interface NoteFormProps {
   onCancelClick: () => void;
-  onNoteCreate: () => void;
+  onFormClose: () => void;
 }
 
 interface NoteFormValues {
@@ -22,7 +22,7 @@ const INITIAL_VALUES: NoteFormValues = {
   tag: "",
 };
 
-const NoteFormSchems = Yup.object({
+const NoteFormSchema = Yup.object({
   title: Yup.string()
     .min(3, "Field title must consist at least 3 characters")
     .max(50, "Field title shoul be 50 characters maximum")
@@ -35,7 +35,7 @@ const NoteFormSchems = Yup.object({
 
 export default function NoteForm({
   onCancelClick,
-  onNoteCreate,
+  onFormClose: onNoteCreate,
 }: NoteFormProps) {
   const fieldId = useId();
   const queryClient = useQueryClient();
@@ -47,8 +47,12 @@ export default function NoteForm({
       queryClient.invalidateQueries({ queryKey: ["notes"], exact: false });
       onNoteCreate();
     },
-    onError: (error) => {
-      alert(error.message);
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("Unknown error!");
+      }
     },
   });
 
@@ -63,7 +67,7 @@ export default function NoteForm({
   return (
     <Formik
       initialValues={INITIAL_VALUES}
-      validationSchema={NoteFormSchems}
+      validationSchema={NoteFormSchema}
       onSubmit={handleSubmit}
     >
       <Form className={css.form}>

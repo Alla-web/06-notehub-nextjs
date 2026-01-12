@@ -39,11 +39,13 @@ export default function NotesPage() {
             onSearch={setSearch}
             resetPage={() => setPage(1)}
           />
-          <Pagination
-            totalPages={data?.totalPages ?? 0}
-            page={page}
-            setPage={setPage}
-          />
+          {data?.totalPages && data?.totalPages > 1 ? (
+            <Pagination
+              totalPages={data?.totalPages ?? 0}
+              page={page}
+              setPage={setPage}
+            />
+          ) : null}
           <button onClick={() => setIsModalOpen(true)} className={css.button}>
             Create note +
           </button>
@@ -59,14 +61,18 @@ export default function NotesPage() {
           {isModalOpen && (
             <Modal onClose={() => setIsModalOpen(false)}>
               <NoteForm
-                onNoteCreate={() => setIsModalOpen(false)}
+                onFormClose={() => setIsModalOpen(false)}
                 onCancelClick={() => setIsModalOpen(false)}
               />
             </Modal>
           )}
-          {!isError && !isLoading && !data?.notes?.length && !isLoading && (
-            <ErrorBox query={debauncedSearch} />
-          )}
+          {data?.notes &&
+            data?.notes?.length > 0 &&
+            debauncedSearch !== "" &&
+            !isError &&
+            !isLoading &&
+            !data?.notes?.length &&
+            !isLoading && <ErrorBox query={debauncedSearch} />}
           {isError && <ErrorBox errorMessage={error.message} />}
         </div>
       </div>

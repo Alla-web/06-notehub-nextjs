@@ -23,7 +23,7 @@ export default function NoteDetails() {
     isFetching,
     isLoading,
   } = useQuery({
-    queryKey: ["notes", id],
+    queryKey: ["note", id],
     queryFn: () => fetchSingleNoteById(id),
     refetchOnMount: false,
   });
