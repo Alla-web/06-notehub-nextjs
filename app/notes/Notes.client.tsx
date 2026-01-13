@@ -73,13 +73,9 @@ export default function NotesPage() {
             </Modal>
           )}
 
-          {data?.notes &&
-            data?.notes?.length > 0 &&
-            debauncedSearch !== "" &&
-            !isError &&
-            !isLoading &&
-            !data?.notes?.length &&
-            !isLoading && <ErrorBox query={debauncedSearch} />}
+          {!isError && !isLoading && !data?.notes?.length && !isLoading && (
+            <ErrorBox query={debauncedSearch} />
+          )}
           {isError && <ErrorBox errorMessage={error.message} />}
         </div>
       </div>
