@@ -30,15 +30,17 @@ export default function NotesPage() {
       staleTime: 60 * 1000,
     });
 
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(1);
+  };
+
   return (
     <div>
       <div className={css.app}>
         <header className={css.toolbar}>
-          <SearchBox
-            search={search}
-            onSearch={setSearch}
-            resetPage={() => setPage(1)}
-          />
+          <SearchBox search={search} onChangeSearch={handleSearchChange} />
+
           {data?.totalPages && data?.totalPages > 1 ? (
             <Pagination
               totalPages={data?.totalPages ?? 0}
@@ -46,18 +48,22 @@ export default function NotesPage() {
               setPage={setPage}
             />
           ) : null}
+
           <button onClick={() => setIsModalOpen(true)} className={css.button}>
             Create note +
           </button>
         </header>
         <div>
           {isLoading && <Loader />}
+
           {data && !isLoading && <NoteList notes={data.notes} />}
+
           {isRefetching && !isLoading && (
             <Modal onClose={() => setIsModalOpen(false)}>
               <Loader />
             </Modal>
           )}
+
           {isModalOpen && (
             <Modal onClose={() => setIsModalOpen(false)}>
               <NoteForm
@@ -66,6 +72,7 @@ export default function NotesPage() {
               />
             </Modal>
           )}
+
           {data?.notes &&
             data?.notes?.length > 0 &&
             debauncedSearch !== "" &&
